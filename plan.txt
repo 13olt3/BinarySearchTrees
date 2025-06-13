@@ -1,0 +1,10 @@
+build tree array
+
+first sort
+and then remove duplicates
+
+first find middle value
+create node equal to middle value
+create two sub arrays and put them into left and right
+repeat this step until left and right array size = 0
+takes middle node puts it into node value
