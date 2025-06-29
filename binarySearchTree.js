@@ -1,4 +1,4 @@
-class Tree {
+export class Tree {
   constructor(root) {
     this.root = root;
   }
@@ -192,7 +192,7 @@ class Tree {
   }
 
   isBalancedTwo() {
-    //Makes an array with levelorder
+    //Makes an array with levelOrder
     let array = [];
     function getNodes(node) {
       array.push(node);
@@ -200,25 +200,40 @@ class Tree {
     this.levelOrder(getNodes);
     // Checks the height of left and right of each node and if there is a difference > 1 then balance is false.
     for (let i = 0; i < array.length; ++i) {
-      let left;
-      let right;
-      if (array[i].left !== null && array[i].right !== null) {
-        if (array[i].left !== null) {
-          left = this.height(array[i].left.data);
-        }
-        if (array[i].right !== null) {
+      if (array[i].right !== null && array[i].left !== null) {
+        let left;
+        let right;
+        left = this.height(array[i].left.data);
+        right = this.height(array[i].right.data);
+        if (Math.abs(left - right) > 1) return false;
+      }
+      // The -1 is there because if one side is null and other side isn't, it will return heights =0 and =1 which won't trigger unbalance.
+      if (array[i].right === null || array[i].left === null) {
+        let left;
+        let right;
+        if (array[i].right) {
           right = this.height(array[i].right.data);
+          left = -1;
+        } else if (array[i].left) {
+          left = this.height(array[i].left.data);
+          right = -1;
         }
+        if (Math.abs(left - right) > 1) return false;
       }
-      if (Math.abs(right - left) > 1) {
-        // console.log(`node data:${array[i].data}`);
-        // console.log(right);
-        // console.log(left);
-        return false;
-      }
+      // the case of both left and right being null is not important because it implies balance
     }
-
     return true;
+  }
+
+  rebalance() {
+    let array = [];
+    function getNodes(node) {
+      array.push(node.data);
+    }
+    this.levelOrder(getNodes);
+    array = arraySort(array);
+    let rebalancedTree = new Tree(buildTree(array));
+    this.root = rebalancedTree.root;
   }
 
   levelOrder(callbackFunc) {
@@ -394,11 +409,11 @@ class Node {
   }
 }
 
-function arraySort(array) {
+export function arraySort(array) {
   return array.sort((a, b) => a - b);
 }
 
-function removeDupes(array) {
+export function removeDupes(array) {
   array = arraySort(array);
   let outputArray = [];
   for (let i = 0; i < array.length; ++i) {
@@ -411,7 +426,7 @@ function removeDupes(array) {
   return outputArray;
 }
 
-function buildTree(array) {
+export function buildTree(array) {
   if (array.length === 1) {
     return new Node(array[0]);
   } else if (array.length === 0) {
@@ -429,25 +444,4 @@ function buildTree(array) {
     }
     return base;
   }
-}
-
-let myArray = [
-  1, 12, 11, 15, 20, 40, 2, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 6,
-];
-
-let testArray = [1, 2, 3];
-
-let sortedArray = removeDupes(arraySort(myArray));
-
-let binaryTree = new Tree(buildTree(sortedArray));
-
-binaryTree.prettyPrint();
-
-binaryTree.prettyPrint();
-console.log(binaryTree.isBalancedTwo());
-
-// console.log(binaryTree.isBalancedTwo());
-
-function tester(node) {
-  console.log(node.data);
 }
