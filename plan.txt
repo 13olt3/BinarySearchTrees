@@ -7,4 +7,49 @@ first find middle value
 create node equal to middle value
 create two sub arrays and put them into left and right
 repeat this step until left and right array size = 0
+
+left and right are also nodes
+
+so for left and right make a new node object with middle node being data and the left array being left right array being right
 takes middle node puts it into node value
+
+
+write inserting function:
+if less than or equal -> move left
+if more than -> move right
+move until null -> attach based on above logic
+
+
+
+
+
+use another function to find appropriate node
+then use the current function to create the new insertion node and insert it into the tree
+
+write deleting function
+deleteing
+
+if its a leaf node, just make the parent path = null
+
+****replace current node with successor node (Swap nodes)
+
+****delete value node
+
+check for single child
+
+if left != null || right != null
+ then ->   if left != null && right != null
+
+
+false
+
+
+
+to find balance,
+for each node of the same depth, if abosolute of  |height a - height b| is > 1 => tree is unbalanced.
+
+
+
+
+
+
